@@ -27,17 +27,19 @@ namespace PrintPdfDocument
     {
         private Font printFont;
         private StreamReader streamToPrint;
+        private string desktopPath;
         public PrintPage()
         {
             InitializeComponent();
+            this.desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string path = this.desktopPath + @"\printtext.txt";
             try
             {
-                streamToPrint = new StreamReader
-                 ("C:\\Users\\flyin\\Desktop\\testwifi.txt");
+                streamToPrint = new StreamReader(path);
                 try
                 {
                     printFont = new Font("宋体", 10);
@@ -90,12 +92,13 @@ namespace PrintPdfDocument
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            string path = this.desktopPath + @"\3c9908abf073412d1a9f1b853cf33658.jpg";
             try
             {
                 PrintDocument pd = new PrintDocument();
                 pd.PrintPage += (s, args) =>
                 {
-                    System.Drawing.Image i = System.Drawing.Image.FromFile("C:\\Users\\flyin\\Desktop\\雯雯小可爱\\2a4e5444eb1c8ca3.jpg");
+                    System.Drawing.Image i = System.Drawing.Image.FromFile(path);
                     System.Drawing.Rectangle m = args.PageBounds;
                     args.Graphics.DrawImage(i, m);
                 };
@@ -110,7 +113,7 @@ namespace PrintPdfDocument
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string path = @"C:\\Users\\flyin\\Desktop\\ReferenceCard.pdf";
+            string path = this.desktopPath + @"\ReferenceCard.pdf";
             using (var document = PdfDocument.Load(path))
             {
                 using (var printDocument = document.CreatePrintDocument())

@@ -10,8 +10,8 @@
 
     <Grid>
         <Button Content="Button" Margin="307,64,366,0" Click="Button_Click" BorderBrush="{x:Null}" Background="#FFFB7EB7" Height="45.24" VerticalAlignment="Top"/>
-        <Button Content="预览" HorizontalAlignment="Left" Margin="307,155.5,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click_1" Height="50.24" Background="#FFFB9C80" BorderBrush="{x:Null}" d:LayoutOverrides="VerticalAlignment"/>
-        <Button Content="打印PDF local" HorizontalAlignment="Left" Margin="307,258,0,0" VerticalAlignment="Top" Width="137" Click="Button_Click_2" Height="41.24" FontSize="14" Background="#FF88A2EA" BorderBrush="#FFFDF9F9"/>
+        <Button Content="预览" HorizontalAlignment="Left" Margin="307,156,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click_1" Height="45" Background="#FFFB9C80" BorderBrush="{x:Null}"/>
+        <Button Content="打印PDF local" HorizontalAlignment="Left" Margin="307,258,0,0" VerticalAlignment="Top" Width="123" Click="Button_Click_2" Height="41" FontSize="14" Background="#FF88A2EA" BorderBrush="#FFFDF9F9"/>
 
     </Grid>
 </Page>
