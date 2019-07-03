@@ -24,27 +24,27 @@ namespace PrintPdfDocument.Controls
             InitHttp();
         }
 
-        public static List<Report> GetReport()
-        {
-            List<Report> reports = GetReportAsync().GetAwaiter().GetResult(); ;
-            return reports;
-        }
-
-        static async Task<List<Report>> GetReportAsync()
+        public async Task<List<Report>> GetReportAsync()
         {
             List<Report> report = null;
-            HttpResponseMessage response = await client.GetAsync("api/getProducts");
-            if (response.IsSuccessStatusCode)
+            try
             {
+                HttpResponseMessage response = await client.GetAsync("api/getProducts");
+                response.EnsureSuccessStatusCode();
                 report = await response.Content.ReadAsAsync<List<Report>>();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("\nException Caught! Message :{0} ", e.Message);
+            }
+            
             return report;
         }
 
         /// <summary>
         /// 初始化请求
         /// </summary>
-        public void InitHttp()
+        protected void InitHttp()
         {
             try
             {
@@ -55,8 +55,7 @@ namespace PrintPdfDocument.Controls
             }
             catch (Exception e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
+                Console.WriteLine("\nException Caught! Message :{0} ", e.Message);
             }
         }
     }

@@ -29,48 +29,31 @@ namespace PrintPdfDocument
         private Font printFont;
         private StreamReader streamToPrint;
         private string desktopPath;
+        private ReportHttp reportHttp;
         private List<Report> reports;
         public PrintPage()
         {
             InitializeComponent();
-            reports = ReportHttp.GetReport();
+            reportHttp = new ReportHttp();
+            setReportList();
 
             desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         }
 
-        // The PrintPage event is raised for each page to be printed.
-        private void pd_PrintPage(object sender, PrintPageEventArgs ev)
+        private async void setReportList()
         {
-            float linesPerPage = 0;
-            float yPos = 0;
-            int count = 0;
-            float leftMargin = ev.MarginBounds.Left;
-            float topMargin = ev.MarginBounds.Top;
-            string line = null;
-
-            // Calculate the number of lines per page.
-            linesPerPage = ev.MarginBounds.Height /
-               printFont.GetHeight(ev.Graphics);
-
-            // Print each line of the file.
-            while (count < linesPerPage &&
-               ((line = streamToPrint.ReadLine()) != null))
+            try
             {
-                yPos = topMargin + (count *
-                   printFont.GetHeight(ev.Graphics));
-                ev.Graphics.DrawString(line, printFont, System.Drawing.Brushes.Black,
-                   leftMargin, yPos, new StringFormat());
-                count++;
+                reports = await reportHttp.GetReportAsync();
+                Console.WriteLine("Message :{0} ", reports[0].fileUrl);
             }
-
-            // If more lines exist, print another page.
-            if (line != null)
-                ev.HasMorePages = true;
-            else
-                ev.HasMorePages = false;
+            catch (Exception e)
+            {
+                Console.WriteLine("\nException Caught! Message :{0} ", e.Message);
+            }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string path = this.desktopPath + @"\3c9908abf073412d1a9f1b853cf33658.jpg";
             try
